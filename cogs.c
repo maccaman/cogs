@@ -78,7 +78,7 @@ task main()
 		}
 		else  //If neither button is pressed, we'll set the motor off.
 		{
-			setArmMotorSpeed(0);
+			setArmMotorSpeed(-25);
 		}
 	}
 }
