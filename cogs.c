@@ -20,6 +20,21 @@
 
 ------------------------------------------------------------------------------------------------*/
 
+// Treat all 6 arm motors as a single motor, to avoid repetition in the main task
+void setArmMotorSpeed(short armMotorSpeed)
+{
+	    // Both top motors
+			motor[frontArmMotorTop] = armMotorSpeed;
+			motor[backArmMotorTop] = armMotorSpeed;
+			// Middle motors need to be driven backwards because there are 3 cogs in a row & they're the middle ones
+			motor[frontArmMotorMiddle] = armMotorSpeed * -1;
+			motor[backArmMotorMiddle] = armMotorSpeed * -1;
+			// Both bottom motors
+			motor[frontArmMotorBottom] = armMotorSpeed;
+			motor[backArmMotorBottom] = armMotorSpeed;
+}
+
+
 task main()
 {
 	int threshold = 10;
@@ -29,71 +44,41 @@ task main()
 		//then we'll set the speed of the motor to vlaue from the joystick.
 		if(vexRT[Ch3] > threshold || vexRT[Ch3] < -threshold)
 		{
-			setMotorSpeed(driveMotorLeftBack, vexRT[Ch3]);
-			setMotorSpeed(driveMotorLeftFront, vexRT[Ch3]);
+			motor[driveMotorLeftBack] = vexRT[Ch3];
+			motor[driveMotorLeftFront] = vexRT[Ch3];
 		}
 		else  //If less than the threshold, we'll set the motor to zero.
 		{
-			setMotorSpeed(driveMotorLeftBack, 0);
-			setMotorSpeed(driveMotorLeftFront, 0);
+			motor[driveMotorLeftBack] = 0;
+			motor[driveMotorLeftFront] = 0;
 		}
 
 		//If the ChannelD (right Y-Axis) is greater than the threshold value,
 		//then we'll set the speed of the motor to vlaue from the joystick.
 		if(vexRT[Ch2] > threshold || vexRT[Ch2] < -threshold)
 		{
-			setMotorSpeed(driveMotorRightBack, vexRT[Ch2]);
-			setMotorSpeed(driveMotorRightFront, vexRT[Ch2]);
+			motor[driveMotorRightBack] = vexRT[Ch2];
+			motor[driveMotorRightFront] = vexRT[Ch2];
 		}
 		else  //If less than the threshold, we'll set the motor to zero.
 		{
-			setMotorSpeed(driveMotorRightBack, 0);
-			setMotorSpeed(driveMotorRightFront, 0);
+			motor[driveMotorRightBack] = 0;
+			motor[driveMotorRightFront] = 0;
 		}
 
 		//If Button "R-Down" is pressed in, we'll set the arm motors to run in reverse.
 		if(vexRT(Btn6D) == 1)
 		{
-			setMotorSpeed(frontArmMotorTop, -127);
-			setMotorSpeed(frontArmMotorMiddle, 127);
-			setMotorSpeed(frontArmMotorBottom, -127);
-			setMotorSpeed(backArmMotorTop, -127);
-			setMotorSpeed(backArmMotorMiddle, 127);
-			setMotorSpeed(backArmMotorBottom, -127);
+			setArmMotorSpeed(-127);
 		}
 		//If the "R-Down" isn't pressed, but "R-Up" is, we'll set the motor to run forward.
 		else if(vexRT[Btn6U] == 1)
 		{
-			setMotorSpeed(frontArmMotorTop, 127);
-			setMotorSpeed(frontArmMotorMiddle, -127);
-			setMotorSpeed(frontArmMotorBottom, 127);
-			setMotorSpeed(backArmMotorTop, 127);
-			setMotorSpeed(backArmMotorMiddle, -127);
-			setMotorSpeed(backArmMotorBottom, 127);
+			setArmMotorSpeed(127);
 		}
 		else  //If neither button is pressed, we'll set the motor off.
 		{
-			setMotorSpeed(frontArmMotorTop, 0);
-			setMotorSpeed(frontArmMotorMiddle, 0);
-			setMotorSpeed(frontArmMotorBottom, 0);
-			setMotorSpeed(backArmMotorTop, 0);
-			setMotorSpeed(backArmMotorMiddle, 0);
-			setMotorSpeed(backArmMotorBottom, 0);
+			setArmMotorSpeed(0);
 		}
-
-		////If Button "L-Up" is pressed in, we'll set the arm motor to run in reverse.
-		//if(vexRT(BtnRUp) == 1)
-		//{
-		//	setMotorSpeed(clawMotor, -127);
-		//}
-		////If the "L-Up" isn't pressed, but "L-Down" is, we'll set the motor to run forward.
-		//else if(vexRT(BtnRDown) == 1)
-		//{
-		//	setMotorSpeed(clawMotor, 127);
-		//}
-		//else	//If neither button is pressed, we'll set the motor off.
-		//{
-		//	setMotorSpeed(clawMotor, 0);
-		//}
 	}
 }
