@@ -51,24 +51,24 @@ task main()
 			setMotorSpeed(driveMotorRightFront, 0);
 		}
 
-		//If Button "R-Up" is pressed in, we'll set the arm motors to run in reverse.
-		if(vexRT(Btn6U) == 1)
+		//If Button "R-Down" is pressed in, we'll set the arm motors to run in reverse.
+		if(vexRT(Btn6D) == 1)
 		{
 			setMotorSpeed(frontArmMotorTop, -127);
-			setMotorSpeed(frontArmMotorMiddle, -127);
+			setMotorSpeed(frontArmMotorMiddle, 127);
 			setMotorSpeed(frontArmMotorBottom, -127);
 			setMotorSpeed(backArmMotorTop, -127);
-			setMotorSpeed(backArmMotorMiddle, -127);
+			setMotorSpeed(backArmMotorMiddle, 127);
 			setMotorSpeed(backArmMotorBottom, -127);
 		}
-		//If the "R-Up" isn't pressed, but "R-Down" is, we'll set the motor to run forward.
-		else if(vexRT[Btn6D] == 1)
+		//If the "R-Down" isn't pressed, but "R-Up" is, we'll set the motor to run forward.
+		else if(vexRT[Btn6U] == 1)
 		{
 			setMotorSpeed(frontArmMotorTop, 127);
-			setMotorSpeed(frontArmMotorMiddle, 127);
+			setMotorSpeed(frontArmMotorMiddle, -127);
 			setMotorSpeed(frontArmMotorBottom, 127);
 			setMotorSpeed(backArmMotorTop, 127);
-			setMotorSpeed(backArmMotorMiddle, 127);
+			setMotorSpeed(backArmMotorMiddle, -127);
 			setMotorSpeed(backArmMotorBottom, 127);
 		}
 		else  //If neither button is pressed, we'll set the motor off.
