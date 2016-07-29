@@ -1,8 +1,8 @@
 #pragma config(Motor,  motor1,          frontArmMotorTop, tmotorVexIQ, openLoop, encoder)
 #pragma config(Motor,  motor2,          frontArmMotorMiddle, tmotorVexIQ, openLoop, encoder)
 #pragma config(Motor,  motor3,          frontArmMotorBottom, tmotorVexIQ, openLoop, encoder)
-#pragma config(Motor,  motor4,          driveMotorLeftBack, tmotorVexIQ, openLoop, encoder)
-#pragma config(Motor,  motor5,          driveMotorLeftFront, tmotorVexIQ, openLoop, encoder)
+#pragma config(Motor,  motor4,          driveMotorLeftY, tmotorVexIQ, openLoop, encoder)
+#pragma config(Motor,  motor5,          frontIntake, tmotorVexIQ, openLoop, encoder)
 #pragma config(Motor,  motor6,          backArmMotorTop, tmotorVexIQ, openLoop, reversed, encoder)
 #pragma config(Motor,  motor7,          backArmMotorMiddle, tmotorVexIQ, openLoop, reversed, encoder)
 #pragma config(Motor,  motor8,          backArmMotorBottom, tmotorVexIQ, openLoop, reversed, encoder)
@@ -44,13 +44,11 @@ task main()
 		//then we'll set the speed of the motor to vlaue from the joystick.
 		if(vexRT[Ch3] > threshold || vexRT[Ch3] < -threshold)
 		{
-			motor[driveMotorLeftBack] = vexRT[Ch3];
-			motor[driveMotorLeftFront] = vexRT[Ch3];
+			motor[driveMotorLeftY] = vexRT[Ch3];
 		}
 		else  //If less than the threshold, we'll set the motor to zero.
 		{
-			motor[driveMotorLeftBack] = 0;
-			motor[driveMotorLeftFront] = 0;
+			motor[driveMotorLeftY] = 0;
 		}
 
 		//If the ChannelD (right Y-Axis) is greater than the threshold value,
